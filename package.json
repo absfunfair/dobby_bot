@@ -1,0 +1,13 @@
+{
+  "name": "dobby",
+  "version": "1.0.0",
+  "description": "A Manager bot for ABS server.",
+  "author": "Fr1nge <yigit@yigitcolakoglu.com>",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}
