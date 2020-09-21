@@ -27,6 +27,10 @@ for (const file of commandFiles) {
 console.log(client.commands);
 
 client.once('ready', async () => {
+	client.user.setActivity("Free", {
+	  type: "STREAMING",
+  	  url: "https://www.twitch.tv/adilburaksen"
+	});
 	for(let i = 0; i < role_message.length; i++){
 	  channel = client.channels.cache.get(role_message[i][0]);
 		message_manager = channel.messages;
@@ -76,7 +80,7 @@ client.on('message', async message => {
             }
         }
 
-        if (!has_roles && message.author.id != "440823026523832322"){
+        if (!has_roles && permitted_roles.length != 0&& message.author.id != "440823026523832322"){
             message.reply('You are not allowed to run this command!');
             return;
         }
@@ -95,7 +99,7 @@ client.on('message', async message => {
             }
         }
 
-        if(!channel_allowed && permitted_channels != 0){
+        if(!channel_allowed && permitted_channels.length != 0){
             return;
         }
     }
@@ -120,20 +124,20 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     let emoji = reaction.emoji.name;
     let member = await reaction.message.guild.members.fetch(user.id);
-		let message = reaction.message;
-
-		let role = guild_to_role[message.guild.id][0];
-		let notifier = guild_to_role[message.guild.id][1];
-		if(!role){
-			role = guild_to_role[message.guild.id][emoji][0];
-			notifier = guild_to_role[message.guild.id][emoji][1];	
-		}
+	let message = reaction.message;
+    if (message.author.id != "750439892894351382") return;
+	let role = guild_to_role[message.guild.id][0];
+	let notifier = guild_to_role[message.guild.id][1];
+	if(!role){
+		role = guild_to_role[message.guild.id][emoji][0];
+		notifier = guild_to_role[message.guild.id][emoji][1];	
+	}
   	member.roles.add(role)
-	  user.send(notifier)
+	user.send(notifier)
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
-    if (reaction.partial) {
+	if (reaction.partial) {
         try {
           await reaction.fetch();
         } catch (error) {
@@ -143,15 +147,16 @@ client.on('messageReactionRemove', async (reaction, user) => {
     }
     let emoji = reaction.emoji.name;
     let member = await reaction.message.guild.members.fetch(user.id);
-		let message = reaction.message;
-		let role = guild_to_role[message.guild.id][0];
-		let notifier = guild_to_role[message.guild.id][2];
-		if(!role){
-			role = guild_to_role[message.guild.id][emoji][0];
-			notifier = guild_to_role[message.guild.id][emoji][2];	
-		}
+	let message = reaction.message;
+    if (message.author.id != "750439892894351382") return;
+	let role = guild_to_role[message.guild.id][0];
+	let notifier = guild_to_role[message.guild.id][2];
+	if(!role){
+		role = guild_to_role[message.guild.id][emoji][0];
+		notifier = guild_to_role[message.guild.id][emoji][2];	
+	}
   	member.roles.remove(role)
-	  user.send(notifier)
+	 user.send(notifier)
 });
 
 // login to Discord with your app's token
